@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="jquery-ui/jquery-ui.css" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+
+    <!-- <script src="http://code.jquery.com/jquery-1.11.1.js"></script> -->
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    
+    <form action="/">
+      <input id="composer" autocomplete="off" /><button  id= "button">Send</button>
+    </form>
+    <script type='text/javascript' >
+    $(document).ready(function(){
+      var socket = io.connect("http://localhost:3000");
+      socket.emit('create', 'room1');
+
+     socket.on('message', function(message) {
+        console.log('message :'+message);
+        $('#messages').append($("<li>").text(message));
+     });
+    $("#button").click(function(e){
+      e.preventDefault();
+      var value=$('#composer').val();
+      $("#messages").append("<li>" + value + "</li>");
+
+    });
+     
+     
+    
+    });
+  
+    </script>
+  </body>
+</html>
